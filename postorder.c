@@ -1,6 +1,12 @@
 #include <stdio.h>
 #include "data_structures.c"
 
+/* Author: W-Flowers
+//
+// This module exists to demonstrate an implementation of a postorder traversal of a binary tree.
+// It is a proof of concept.
+*/
+
 int main(){
 	int array[1024];
 	for(int i = 0; i<1024; i++) array[i] = i+1;

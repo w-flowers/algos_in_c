@@ -1,7 +1,7 @@
 #include <stdlib.h>
 
 
-/* Author: William Flowers
+/* Author: W-Flowers
 //
 // Purpose: This library exists to provide some basic data structures and operations pertaining to 
 // them. Defined herein are trees, linked lists, stacks and queues. The main intended usage of this
