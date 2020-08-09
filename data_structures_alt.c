@@ -1,5 +1,6 @@
 #include <stdlib.h>
-
+#include <string.h>
+#define DATATYPE int
 
 /* Author: W-Flowers
 //
@@ -15,13 +16,13 @@
 
 
 struct bt_node {
-	void *key;
+	DATATYPE key;
 	struct bt_node *l;
 	struct bt_node *r;
 };
 
 struct ll_node {
-	void *key;
+	DATATYPE key;
 	struct ll_node *next;
 };
 
@@ -31,8 +32,9 @@ struct queue {
 };
 
 struct stack {
-	struct ll_node *top;
-	struct ll_node *freelist;
+	void **array;
+	int top;
+	int size;
 };
 
 //Creates an empty queue, with front and back initialised as NULL
@@ -138,65 +140,52 @@ int destroy_queue(struct queue *q){
 struct stack *stack_init(){
 	struct stack *s = malloc(sizeof(struct stack));
 	if(s){
-		s->top = NULL;
-		s->freelist = NULL;
+		s->size = 64;
+		s->array = malloc((s->size)*sizeof(*(s->array)));
+		s->top = 0;
 		return s;
 	}
 	else return NULL;
 }
 
 int push(struct stack *s, void *k){
-	if(s->freelist != NULL){
-		struct ll_node *dmynode = NULL;
-		s->freelist->key = k;
-		dmynode = s->freelist->next;
-		s->freelist->next = s->top;
-		s->top = s->freelist;
-		s->freelist = dmynode;
+	if(s->top == s->size){
+		void **dmyptr = s->array;
+		s->array = malloc(2*(s->size)*sizeof(*s->array));
+		if(!s->array) return 1;
+		
+		memcpy(s->array, dmyptr, (s->size)*sizeof(*dmyptr));
+		s->size *= 2;
+		free(dmyptr);
+		*((s->array)+(s->top)) = k;
+		s->top++;
 	}
-	else{
-		struct ll_node *new_ele = malloc(sizeof(struct ll_node));
-		if(!new_ele) return 1;
-		new_ele->key = k;
-		new_ele->next = s->top;
-		s->top = new_ele;
-	}
+	*((s->array)+(s->top)) = k;
+	s->top++;
 	return 0;
 }
 
 void *pop(struct stack *s){
-	if(s->top == NULL) return NULL;
-	void *k = s->top->key;
-	struct ll_node *dlt = s->top;
-	s->top = s->top->next;
-	dlt->next = s->freelist;
-	s->freelist = dlt;
+	if(s->top <= 0) return NULL;
+	s->top--;
+	void *k = *((s->array)+(s->top));
 	return k;
 }
 
 void *peek(struct stack *s){
 	if(!stackempty(s)){
-		return s->top->key;
+		return *((s->array)-(s->top)-1);
 	}
 	else return 0;
 }
 
 int stackempty(struct stack *s){
-	if(s->top == NULL) return 1;
+	if(s->top == 0) return 1;
 	else return 0;
 }
 
 int destroy_stack(struct stack *s){
-	for(struct ll_node *dummy = s->top; dummy != NULL;){
-		struct ll_node *dlt = dummy;
-		dummy = dummy->next;
-		free(dlt);
-	}
-	for(struct ll_node *dummy = s->freelist; dummy != NULL;){
-		struct ll_node *dlt = dummy;
-		dummy = dummy->next;
-		free(dlt);
-	}
+	free(s->array);
 	free(s);
 	return 0;
 }
