@@ -3,18 +3,18 @@
 #include <limits.h>
 #include <time.h>
 
-#define SIZE 50000
+#define SIZE 500000
 
 /* Implementation of shellsort with sentinal key */
 int shellsort(int a[], int size)
 {
    int i, j, h, v;
 
-   for(h = 1; h < size/9; h = 4*h - 1);
+   for(h = 1; h < size/9; h = 3*h + 1);
 
-   for(; h >= 1; h = (h + 1)/4)
+   for(; h >= 1; h /= 3)
    {
-      for(i = h + 1; i <= size; i += h)
+      for(i = h + 1; i <= size; i += 1)
       {
          v = a[i], j = i;
 
