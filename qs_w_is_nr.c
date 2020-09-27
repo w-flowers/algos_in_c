@@ -14,7 +14,7 @@
 
 #define SIZE 500000
 
-#define THRSH 50 
+#define THRSH 25 
 
 //NOTE:  a sentinel key is used in position l
 
@@ -62,11 +62,16 @@ int qsort_w_insort(int arr[], int l, int r)
    {
       i = pop_int(stack); j = pop_int(stack);
 
-      if( j - i < THRSH ) insert_sort_range( arr, i, j );
-
-      else
+      while(1)
       {
          k = i; m = j;
+
+         if( m - k < THRSH )
+         {
+            insert_sort_range( arr, k, m);
+
+            break;
+         }
 
          while(1)
          {
@@ -79,10 +84,15 @@ int qsort_w_insort(int arr[], int l, int r)
             dmy = arr[k], arr[k] = arr[m], arr[m] = dmy;
          }
          dmy = arr[j]; arr[j] = arr[k]; arr[k] = dmy;
-
-         push_int(stack, j); push_int(stack, k);
-
-         push_int(stack, k - 1); push_int(stack, i);
+         
+         if( k - 1 - i < j - k )
+         {
+            push_int(stack, j); push_int(stack, k); j = k - 1;
+         }
+         else
+         {
+            push_int(stack, k - 1); push_int(stack, i); i = k;
+         }
       }
    }
 
@@ -108,7 +118,7 @@ int myqsort(int arr[], int l, int r)
 
       if( j - i < 2 );
 
-      else
+      while(j > i + 1)
       {
          k = i; m = j;
 
@@ -123,10 +133,15 @@ int myqsort(int arr[], int l, int r)
             dmy = arr[k], arr[k] = arr[m], arr[m] = dmy;
          }
          dmy = arr[j]; arr[j] = arr[k]; arr[k] = dmy;
-
-         push_int(stack, j); push_int(stack, k);
-
-         push_int(stack, k - 1); push_int(stack, i);
+         
+         if( k - 1 - i < j - k )
+         {
+            push_int(stack, j); push_int(stack, k); j = k - 1;
+         }
+         else
+         {
+            push_int(stack, k - 1); push_int(stack, i); i = k;
+         }
       }
    }
 
