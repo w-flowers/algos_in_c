@@ -313,8 +313,6 @@ int push_int(struct stack_int  *s, int k){
 		memcpy(s->array, dmyptr, (s->size)*sizeof(*dmyptr));
 		s->size *= 2;
 		free(dmyptr);
-		*((s->array)+(s->top)) = k;
-		s->top++;
 	}
 	*((s->array)+(s->top)) = k;
 	s->top++;
