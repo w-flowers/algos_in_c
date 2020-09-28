@@ -1,5 +1,5 @@
 /***********************************
- * William Flowers
+ * W Flowers
  *
  * Solution to Problem 1 Chapter 9 of Algorithms in C
  *
@@ -215,83 +215,66 @@ int main()
 
    srand((int) time(NULL));
 
-   for(int i = 1; i < SIZE + 1; i++){
-      array[i] = (int) rand() % 10000;
-
-      array1[i] = array[i];
-
-      array2[i] = array[i];
-
-      array3[i] = array[i];
-
-      //printf("%d ", array[i]);
-   }
-   
-   printf("\n");
+   long qs_timer = 0; long qs_nrc_timer = 0; long qsis_timer = 0; long qsis_nrc_timer = 0;
 
    clock_t start, end;
-  
-   start = clock();
 
-   qsort_w_insort(array, 0, SIZE);
-
-   end = clock();
-
-   for(int i = 1; i < SIZE; i++) if(array[i] > array[i+1])
+   for(int rep = 0; rep < 1000; rep++)
    {
-      printf("qwi: Array not sorted!!\n");
+      for(int i = 1; i < SIZE + 1; i++)
+      {
+         array[i] = (int) rand() % 100000;
 
-      break;
+         array1[i] = array[i];
+
+         array2[i] = array[i];
+
+         array3[i] = array[i];
+
+         //printf("%d ", array[i]);
+      }
+      start = clock();
+
+      qsort_w_insort(array, 0, SIZE);
+
+      end = clock();
+
+      qsis_timer += (end - start);
+
+      start = clock();
+
+      myqsort(array1, 0, SIZE);
+
+      end = clock();
+
+      qs_timer += (end - start);
+
+      start = clock();
+
+      myqsort_nrc(array2, 0, SIZE);
+
+      end = clock();
+
+      qs_nrc_timer += (end - start);
+
+      start = clock();
+
+      qsort_w_insort_nrc(array3, 0, SIZE);
+
+      end = clock();
+
+      qsis_nrc_timer += (end - start);
+
+
    }
-
-   printf("qwi: %ld\n", (end - start));
-
-   //for(int i = 1; i < SIZE + 1; i++) printf("%d ", array[i]);
    
-   start = clock();
+   printf("qwi: %ld\n", qsis_timer);
 
-   myqsort(array1, 0, SIZE);
-
-   end = clock();
-
-   for(int i = 1; i < SIZE; i++) if(array1[i] > array1[i+1])
-   {
-      printf("qs: Array not sorted!!\n");
-
-      break;
-   }
-
-   printf("qs: %ld\n", (end - start));
+   printf("qs: %ld\n", qs_timer);
   
-   start = clock();
+   printf("qwi_nrc: %ld\n", qsis_nrc_timer);
 
-   qsort_w_insort_nrc(array2, 0, SIZE);
-
-   end = clock();
-
-   for(int i = 1; i < SIZE; i++) if(array2[i] > array2[i+1])
-   {
-      printf("qwi_nrc: Array not sorted!!\n");
-
-      break;
-   }
-
-   printf("qwi_nrc: %ld\n", (end - start));
-
-   start = clock();
-
-   myqsort_nrc(array3, 0, SIZE);
-
-   end = clock();
-
-   for(int i = 1; i < SIZE; i++) if(array3[i] > array3[i+1])
-   {
-      printf("qs_nrc: Array not sorted!!\n");
-
-      break;
-   }
-
-   printf("qs_nrc: %ld\n", (end - start));
+   printf("qs_nrc: %ld\n", qs_nrc_timer);
 
    return 0;
 }
