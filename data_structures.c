@@ -223,6 +223,7 @@ int add_node(void *k, struct bt_node *tree_p){
 	p->r = NULL;
 	p->key = k;
 	while(!queueempty(q)){
+		t = get(q);
 		if(t->l == NULL){
 			t->l = p;
 			break;
@@ -237,7 +238,6 @@ int add_node(void *k, struct bt_node *tree_p){
 		else{
 			put(q, t->r);
 		}
-		t = get(q);
 	}
 	destroy_queue(q);
 	return 0;

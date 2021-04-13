@@ -375,6 +375,7 @@ int add_node_int(int k, struct bt_node_int  *tree_p){
 	p->r = NULL;
 	p->key = k;
 	while(!queueempty_btree(q)){
+		t = get_btree(q);
 		if(t->l == NULL){
 			t->l = p;
 			break;
@@ -389,7 +390,6 @@ int add_node_int(int k, struct bt_node_int  *tree_p){
 		else{
 			put_btree(q, t->r);
 		}
-		t = get_btree(q);
 	}
 	destroy_queue_btree(q);
 	return 0;

@@ -1,7 +1,15 @@
+/* ****************************************************************************
+ * drawtree.c - a program which uses SDL to draw a binary tree
+ *
+ * 
+ *
+ * Author - w-flowers
+ * ***************************************************************************/
 #include <stdio.h>
+
 #include <SDL2/SDL.h>
+
 #include "data_structures_int.c"
-//#include "data_structures_btree.c"
 
 //This tree drawing program can accomodate about 7 levels of a tree.
 

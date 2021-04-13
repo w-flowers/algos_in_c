@@ -1,3 +1,11 @@
+/* *****************************************************************************
+ * euclidsalg.c
+ *
+ * A program which can implement Euclid's algorithm for finding the GCD of a
+ * pair of numbers and use this to simplify a fraction.
+ *
+ * Author - w-flowers
+ * ***************************************************************************/
 #include<stdio.h>
 
 struct fraction {

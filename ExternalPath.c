@@ -1,3 +1,17 @@
+/* ****************************************************************************
+ * ExternalPath.c
+ *
+ * A program to compare the speed of 3 different approaches to computing the 
+ * external path length of a binary tree.
+ *
+ * It compares the speed of using a recursive path length function, and 2 non
+ * recursive equivalents. One of the algorithms uses an explicit stack struct,
+ * while the other implements a stack using a naked array and by incrementing
+ * an int.
+ *
+ * Author - w-flowers
+ * ***************************************************************************/
+
 #include "data_structures_int.c"
 #include <time.h>
 #include <stdio.h>
